@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import HomePage from './containers/Homepage/Homepage'
+import HomePage from './containers/Homepage/Homepage';
+import List from './containers/List/List';
 import './App.css';
 
 class App extends Component {
   state = {
     menuData: [],
-    listData: []
+    listData: [],
+    listItemsData: []
   }
 
   componentDidMount() {
@@ -35,12 +37,17 @@ class App extends Component {
       listData.push({id: i, name: "list " + i, listItems: listItemsData});
     }
 
-    this.setState({listData: listData});
+    this.setState({listData: listData, listItemsData: listItemsData});
   }
 
   render() {
+    let display = <HomePage lists={this.state.menuData} listItems={this.state.listData} />; 
+    if(true) {
+      display = <List lists={this.state.menuData} listItems={this.state.listItemsData} name="list 1" />;
+    }
+
     return (
-      <HomePage lists={this.state.menuData} listItems={this.state.listData} />
+      display
     );
   }
 }
