@@ -1,11 +1,12 @@
 import React from 'react';
 
 import ListMenuItem from './ListMenuItem/ListMenuItem';
+import './ListMenu.css';
 
 const ListMenu = (props) => (
-    <div>
+    <div className="listMenu">
         {props.lists.map(list => (
-            <ListMenuItem listName={list.name} />
+            <ListMenuItem key={list.id} listName={list.name} />
         ))}
     </div>
 );

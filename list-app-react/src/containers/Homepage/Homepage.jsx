@@ -5,8 +5,8 @@ import ListSummary from '../../components/ListSummary/ListSummary';
 
 const Homepage = (props) => (
     <div>
-        <ListMenu lists={props.lists} />
-        <ListSummary listItems={props.listItems} />
+        <ListMenu lists={props.lists} className={"listMenu"} />
+        <ListSummary topLists={props.listItems} className={"listSummary"} />
     </div>
 );
 
