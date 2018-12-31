@@ -8,7 +8,7 @@ const ListSummary = (props) => (
         {props.topLists.map(list => (
             <div key={list.id} className="listSummary">
                 <p>{list.name}</p>
-                <ListItems listItems={list.listItems} />
+                <ListItems listItems={list.items} />
             </div>
         ))}
     </div>

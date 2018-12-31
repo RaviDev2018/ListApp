@@ -1,0 +1,9 @@
+export const ADD_LIST = 'ADD_LIST';
+export const REMOVE_LIST = 'REMOVE_LIST';
+export const SET_LISTS = 'SET_LIST_NAMES';
+export const FETCH_LISTS_FAILED = 'FETCH_LISTS_FAILED';
+
+export const ADD_LIST_ITEM = 'ADD_LIST_ITEM';
+export const REMOVE_LIST_ITEM = 'REMOVE_LIST_ITEM';
+export const SET_LIST_ITEMS = 'SET_LIST_ITEMS';
+export const FETCH_LIST_ITEMS_FAILED = 'FETCH_LIST_ITEMS_FAILED';
