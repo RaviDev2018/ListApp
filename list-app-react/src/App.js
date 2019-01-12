@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <Switch>
-        <Route path="/List" component={List} />
+        <Route path="/List/:id" component={List} />
         <Route path="/" exact component={HomePage} />
       </Switch>
     );

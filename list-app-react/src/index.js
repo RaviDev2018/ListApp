@@ -9,11 +9,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import summaryReducer from './store/reducers/summary';
+import listReducer from './store/reducers/list';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
-    summary: summaryReducer
+    summary: summaryReducer,
+    list: listReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(
