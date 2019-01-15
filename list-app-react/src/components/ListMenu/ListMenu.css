@@ -2,3 +2,8 @@
     width: 150px;
     display: inline-block;
 }
+
+.listMenu a {
+    width: 100%;
+    display: inline-block;
+}
