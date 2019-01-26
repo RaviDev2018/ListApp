@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import ListMenu from '../../components/ListMenu/ListMenu';
 import ListItems from '../../components/ListItems/ListItems';
@@ -13,13 +14,19 @@ export class List extends Component {
     }
 
     render() {
+        let listItemsDisplay = null;
+        if(this.props.items !== undefined && Object.keys(this.props.items).length) {
+            listItemsDisplay = <ListItems listItems={this.props.items} />;
+        }
+
         return (
             <div>
                 <ListMenu lists={this.props.lists} />
                 <div className="listPage">
                     <p>{this.props.match.params.id}</p>
-                    <ListItems listItems={this.props.items} />
+                    {listItemsDisplay}
                 </div>
+                <NavLink to={'/newListItem'}>Add new list item</NavLink>
             </div>
         );
     }

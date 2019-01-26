@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import HomePage from './containers/Homepage/Homepage';
 import List from './containers/List/List';
 import NewList from './components/UI/Modals/NewList/NewList';
+import NewListItem from './components/UI/Modals/NewListItem/NewListItem';
 
 import './App.css';
 
@@ -14,6 +15,7 @@ class App extends Component {
       <Switch>
         <Route path="/List/:id" component={List} />
         <Route path="/NewList" component={NewList} />
+        <Route path="/NewListItem" component={NewListItem} />
         <Route path="/" exact component={HomePage} />
       </Switch>
     );

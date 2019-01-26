@@ -3,13 +3,27 @@ import { updatedObject } from '../../shared/utility';
 
 const initialState = {
     name: "",
-    items: [],
+    items: {},
     error: false,
     fetchedItems: false
 };
 
 const addListItem = (state, action) => {
-    return state;
+    if(action.isAppendingItem) {
+        return {
+            ...state,
+            items: {
+                ...state.items,
+                ...action.newListItem
+            }
+        };
+    } else {
+        const newListItemName = Object.keys(action.newListItem)[0];
+
+        return updatedObject(state, {
+            items: action.newListItem[newListItemName]
+        });
+    }
 };
 
 const removeListItem = (state, action) => {
@@ -19,7 +33,8 @@ const removeListItem = (state, action) => {
 const setListItems = (state, action) => {
     return updatedObject(state, {
         items: action.items,
-        fetchedItems: true
+        fetchedItems: true,
+        name: action.name
     });
 };
 
