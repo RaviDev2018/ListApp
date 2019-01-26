@@ -1,20 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-setup';
 
-export const addList = (name) => {
-    return {
-        type: actionTypes.ADD_LIST,
-        listName: name
-    };
-};
-
-export const removeList = (id) => {
-    return {
-        type: actionTypes.REMOVE_LIST,
-        listId: id
-    };
-};
-
 export const setLists = (names, summary) => {
     return {
         type: actionTypes.SET_LISTS,
@@ -47,6 +33,32 @@ export const fetchLists = () => {
             .catch(error => {
                 dispatch(fetchListsFailed());
             });
+    };
+};
+
+export const addList = (newList) => {
+    return dispatch => {
+        axios.patch('lists.json', newList)
+            .then(response => {
+                dispatch(addedList(newList));
+            })
+            .catch(error => {
+                dispatch(fetchListsFailed());
+            });
+    };
+};
+
+export const addedList = (newList) => {
+    return {
+        type: actionTypes.ADD_LIST,
+        newList: newList
+    };
+};
+
+export const removeList = (id) => {
+    return {
+        type: actionTypes.REMOVE_LIST,
+        listId: id
     };
 };
 
