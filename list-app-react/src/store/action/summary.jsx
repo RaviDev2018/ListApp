@@ -55,10 +55,22 @@ export const addedList = (newList) => {
     };
 };
 
-export const removeList = (id) => {
+export const removeList = (listName) => {
+    return dispatch => {
+        axios.delete('lists/'+listName+'.json')
+            .then(response => {
+                dispatch(removedList(listName));
+            })
+            .catch(error => {
+                dispatch(fetchListsFailed());
+            });
+    };
+};
+
+export const removedList = (listName) => {
     return {
         type: actionTypes.REMOVE_LIST,
-        listId: id
+        listName: listName
     };
 };
 

@@ -13,6 +13,12 @@ export class List extends Component {
         this.props.onFetchListItems(this.props.match.params.id);
     }
 
+    componentWillReceiveProps(newProps) {
+        if(newProps.isListRemoved) {
+            this.props.history.push('/');
+        }
+    }
+
     render() {
         let listItemsDisplay = null;
         if(this.props.items !== undefined && Object.keys(this.props.items).length) {
@@ -27,6 +33,7 @@ export class List extends Component {
                     {listItemsDisplay}
                 </div>
                 <NavLink to={'/newListItem'}>Add new list item</NavLink>
+                <span onClick={() => this.props.onRemoveList(this.props.match.params.id)}>Delete list</span>
             </div>
         );
     }
@@ -35,13 +42,15 @@ export class List extends Component {
 const mapStateToProps = state => {
     return {
         lists: state.summary.summaryLists,
-        items: state.list.items
+        items: state.list.items,
+        isListRemoved: state.summary.isListRemoved
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchListItems: (listName) => dispatch(actions.fetchListItems(listName))
+        onFetchListItems: (listName) => dispatch(actions.fetchListItems(listName)),
+        onRemoveList: (listName) => dispatch(actions.removeList(listName))
     }
 }
 

@@ -4,7 +4,8 @@ import { updatedObject } from '../../shared/utility';
 const initialState = {
     summaryLists: [],
     listNames: [],
-    error: false
+    error: false,
+    isListRemoved: false
 };
 
 const setLists = (state, action) => {
@@ -41,8 +42,9 @@ const addList = (state, action) => {
 };
 
 const removeList = (state, action) => {
-    //need to remove list from both summary and list names
-    return state;
+    return updatedObject(state, {
+        isListRemoved: true
+    });
 };
 
 const fetchListsFailed = (state, action) => {
