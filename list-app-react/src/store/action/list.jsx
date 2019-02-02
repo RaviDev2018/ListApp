@@ -26,10 +26,25 @@ export const addedListItem = (newListItem, isAppendingItem) => {
     };
 };
 
-export const removeListItem = (id) => {
+export const removeListItem = (listName, listItemName, newListItem) => {
+    return dispatch => {
+        axios.delete('lists/'+listName+'/items/'+listItemName+'.json')
+            .then(response => {
+                if(newListItem != null) {
+                    dispatch(addListItem(listName, newListItem, true));
+                } else {
+                    dispatch(removedListItem());
+                }
+            })
+            .catch(error => {
+                dispatch(fetchListItemsFailed());
+            });
+    };
+};
+
+export const removedListItem = () => {
     return {
-        type: actionTypes.REMOVE_LIST_ITEM,
-        listItemId: id
+        type: actionTypes.REMOVE_LIST_ITEM
     };
 };
 
@@ -50,6 +65,16 @@ export const fetchListItems = (listName) => {
             .catch(error => {
                 dispatch(fetchListItemsFailed());
             });
+    };
+};
+
+export const editListItem = (listName, oldItemName, newListItem) => {
+    return removeListItem(listName, oldItemName, newListItem);
+};
+
+export const editedListItem = () => {
+    return {
+        type: actionTypes.EDIT_LIST_ITEM
     };
 };
 

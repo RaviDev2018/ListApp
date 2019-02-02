@@ -1,10 +1,11 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import './ListItem.css';
 
 const ListItem = (props) => (
     <div className="listItem">
-        <div>{props.name}</div>
+        <NavLink to={'/editListItem/'+props.name}>{props.name}</NavLink>
         <div>{props.comment}</div>
     </div>
 );

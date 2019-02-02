@@ -6,6 +6,7 @@ import HomePage from './containers/Homepage/Homepage';
 import List from './containers/List/List';
 import NewList from './components/UI/Modals/NewList/NewList';
 import NewListItem from './components/UI/Modals/NewListItem/NewListItem';
+import EditListItem from './components/UI/Modals/EditListItem/EditListItem';
 
 import './App.css';
 
@@ -14,6 +15,7 @@ class App extends Component {
     return (
       <Switch>
         <Route path="/List/:id" component={List} />
+        <Route path="/editListItem/:id" component={EditListItem} />
         <Route path="/NewList" component={NewList} />
         <Route path="/NewListItem" component={NewListItem} />
         <Route path="/" exact component={HomePage} />
