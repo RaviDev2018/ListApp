@@ -9,6 +9,12 @@ export class EditListItem extends Component {
         editItemComment: this.props.items[this.props.match.params.id].comment
     }
 
+    componentWillReceiveProps(newProps) {
+        if(newProps.isListItemRemoved) {
+            this.props.history.push('/List/'+this.props.listName);
+        }
+    }
+
     handleChangeEditName = (e) => {
         this.setState({editItemName: e.target.value});
     }
@@ -30,6 +36,10 @@ export class EditListItem extends Component {
         this.props.onEditListItem(this.props.listName, this.props.match.params.id, newListItem);
     }
 
+    handleRemoveListItem = () => {
+        this.props.onRemoveListItem(this.props.listName, this.props.match.params.id);
+    }
+
     render() {
         return (
             <div>
@@ -42,6 +52,7 @@ export class EditListItem extends Component {
                 <div>
                     <button onClick={this.handleEditListItem}>Save</button>
                     <button>Cancel</button>
+                    <button onClick={this.handleRemoveListItem}>Delete Item</button>
                 </div>
             </div>
         )
@@ -51,13 +62,15 @@ export class EditListItem extends Component {
 const mapStateToProps = state => {
     return {
         items: state.list.items,
-        listName:state.list.name
+        listName: state.list.name,
+        isListItemRemoved: state.list.isListItemRemoved
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onEditListItem: (listName, oldItemName, newListItem) => dispatch(actions.editListItem(listName, oldItemName, newListItem))
+        onEditListItem: (listName, oldItemName, newListItem) => dispatch(actions.editListItem(listName, oldItemName, newListItem)),
+        onRemoveListItem: (listName, listItemName) => dispatch(actions.removeListItem(listName, listItemName))
     }
 }
 

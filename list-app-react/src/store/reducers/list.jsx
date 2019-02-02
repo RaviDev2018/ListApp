@@ -27,7 +27,9 @@ const addListItem = (state, action) => {
 };
 
 const removeListItem = (state, action) => {
-    return state;
+    return updatedObject(state, {
+        isListItemRemoved: true
+    });
 };
 
 const setListItems = (state, action) => {
