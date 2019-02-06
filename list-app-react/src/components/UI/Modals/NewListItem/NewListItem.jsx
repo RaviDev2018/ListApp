@@ -24,7 +24,7 @@ export class NewListItem extends Component {
         if(this.props.items !== undefined && Object.keys(this.props.items).length) {
             newListItem = {
                 [this.state.newName]: {
-                    "id": 10,
+                    "id": Math.random().toString(36).substring(2),
                     "comment": this.state.newComment
                 }
             }
@@ -33,7 +33,7 @@ export class NewListItem extends Component {
             newListItem = {
                 "items": {
                     [this.state.newName]: {
-                        "id": 10,
+                        "id": Math.random().toString(36).substring(2),
                         "comment": this.state.newComment
                     }
                 }

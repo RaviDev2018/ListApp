@@ -15,7 +15,7 @@ export class NewList extends Component {
     handleAddNewList = () => {;
         const newList = {
             [this.state.newName]: {
-                "id": 10,
+                "id": Math.random().toString(36).substring(2),
                 "items": {}
             }
         }
