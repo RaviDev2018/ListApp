@@ -1,6 +1,7 @@
 export const ADD_LIST = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
 export const SET_LISTS = 'SET_LIST_NAMES';
+export const RESET_LIST_REMOVED = 'RESET_LIST_REMOVED';
 export const FETCH_LISTS_FAILED = 'FETCH_LISTS_FAILED';
 
 export const ADD_LIST_ITEM = 'ADD_LIST_ITEM';

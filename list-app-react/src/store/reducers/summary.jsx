@@ -47,6 +47,12 @@ const removeList = (state, action) => {
     });
 };
 
+const resetListRemoved = (state, action) => {
+    return updatedObject(state, {
+        isListRemoved: false
+    });
+};
+
 const fetchListsFailed = (state, action) => {
     return updatedObject(state, {
         error: true
@@ -58,6 +64,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_LISTS: return setLists(state, action);
         case actionTypes.ADD_LIST: return addList(state, action);
         case actionTypes.REMOVE_LIST: return removeList(state, action);
+        case actionTypes.RESET_LIST_REMOVED: return resetListRemoved(state, action);
         case actionTypes.FETCH_LISTS_FAILED: return fetchListsFailed(state, action);
         default:
             return state;

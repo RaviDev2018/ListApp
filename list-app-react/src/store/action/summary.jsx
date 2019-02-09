@@ -74,6 +74,12 @@ export const removedList = (listName) => {
     };
 };
 
+export const resetListRemoved = () => {
+    return {
+        type: actionTypes.RESET_LIST_REMOVED
+    };
+};
+
 export const fetchListsFailed = () => {
     return {
         type: actionTypes.FETCH_LISTS_FAILED

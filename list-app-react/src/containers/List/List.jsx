@@ -14,6 +14,7 @@ export class List extends Component {
 
     componentDidUpdate(prevProps) {
         if(this.props.isListRemoved) {
+            this.props.onResetListRemoved();
             this.props.history.push('/');
         } else if(this.props.match.params.id !== prevProps.match.params.id) {
             this.props.onFetchListItems(this.props.match.params.id);
@@ -50,7 +51,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchListItems: (listName) => dispatch(actions.fetchListItems(listName)),
-        onRemoveList: (listName) => dispatch(actions.removeList(listName))
+        onRemoveList: (listName) => dispatch(actions.removeList(listName)),
+        onResetListRemoved: () => dispatch(actions.resetListRemoved())
     }
 }
 

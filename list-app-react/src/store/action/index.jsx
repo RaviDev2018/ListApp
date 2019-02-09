@@ -1,2 +1,2 @@
-export { fetchLists, addList, removeList } from './summary';
+export { fetchLists, addList, removeList, resetListRemoved } from './summary';
 export { addListItem, removeListItem, fetchListItems, editListItem } from './list';
