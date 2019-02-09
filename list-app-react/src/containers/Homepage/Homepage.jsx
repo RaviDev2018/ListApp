@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import ListMenu from '../../components/ListMenu/ListMenu';
 import ListSummary from '../../components/ListSummary/ListSummary';
 import * as actions from '../../store/action/index';
+
+import './Homepage.css';
 
 export class Homepage extends Component {
     componentDidMount() {
@@ -11,10 +12,9 @@ export class Homepage extends Component {
     }
 
     render() {
-        let display = <div>No lists found</div>;
+        let display = <div className="homepage">No lists found</div>;
         if(this.props.names != null && this.props.lists) {
-            display =   <div>
-                            <ListMenu lists={this.props.names} />
+            display =   <div className="homepage">
                             <ListSummary topLists={this.props.lists} />
                         </div>;
         }

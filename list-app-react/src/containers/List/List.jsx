@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import ListMenu from '../../components/ListMenu/ListMenu';
 import ListItems from '../../components/ListItems/ListItems';
 import * as actions from '../../store/action/index';
 
@@ -13,9 +12,11 @@ export class List extends Component {
         this.props.onFetchListItems(this.props.match.params.id);
     }
 
-    componentWillReceiveProps(newProps) {
-        if(newProps.isListRemoved) {
+    componentDidUpdate(prevProps) {
+        if(this.props.isListRemoved) {
             this.props.history.push('/');
+        } else if(this.props.match.params.id !== prevProps.match.params.id) {
+            this.props.onFetchListItems(this.props.match.params.id);
         }
     }
 
@@ -26,9 +27,8 @@ export class List extends Component {
         }
 
         return (
-            <div>
-                <ListMenu lists={this.props.lists} />
-                <div className="listPage">
+            <div className="listPage">
+                <div>
                     <p>{this.props.match.params.id}</p>
                     {listItemsDisplay}
                 </div>
