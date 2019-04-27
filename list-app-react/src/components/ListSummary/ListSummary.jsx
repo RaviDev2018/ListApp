@@ -1,17 +1,19 @@
 import React from 'react';
 
 import ListItems from '../ListItems/ListItems';
-import './ListSummary.css';
+
+import Card from 'react-bootstrap/Card';
+import CardDeck from 'react-bootstrap/CardDeck';
 
 const ListSummary = (props) => (
-    <div className="listSummaryPage">
+    <CardDeck>
         {props.topLists.map(list => (
-            <div key={list.id} className="listSummary">
-                <p>{list.name}</p>
+            <Card key={list.id} bg="dark" text="white">
+                <Card.Header>{list.name}</Card.Header>
                 <ListItems listItems={list.items} />
-            </div>
+            </Card>
         ))}
-    </div>
+    </CardDeck>
 );
 
 export default ListSummary;
