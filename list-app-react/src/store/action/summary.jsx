@@ -22,12 +22,28 @@ export const fetchLists = () => {
 
                     if(counter < 5) {
                         let summaryList = response.data[listName];
+                        
+                        if(Object.keys(summaryList.items).length > 5) {
+                            let newItems = {};
+                            let itemCounter = 0;
+
+                            for(let itemName in summaryList.items) {
+                                if(itemCounter < 5) {
+                                    newItems[itemName] = summaryList.items[itemName];
+                                    itemCounter++;
+                                }
+                            }
+                            
+                            summaryList.items = newItems;
+                        }
+
                         summaryList.name = listName;
 
                         newSummaryLists.push(summaryList);
                         counter++;
                     }
                 }
+                
                 dispatch(setLists(newListNames, newSummaryLists));
             })
             .catch(error => {

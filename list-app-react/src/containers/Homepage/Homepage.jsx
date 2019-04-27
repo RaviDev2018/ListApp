@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import ListSummary from '../../components/ListSummary/ListSummary';
 import * as actions from '../../store/action/index';
 
-import './Homepage.css';
-
 export class Homepage extends Component {
     componentDidMount() {
         this.props.onFetchLists();

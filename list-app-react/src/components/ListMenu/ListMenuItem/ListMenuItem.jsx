@@ -1,8 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+
+import Nav from 'react-bootstrap/Nav';
 
 const ListMenuItem = (props) => (
-    <NavLink to={'/List/' + props.listName}>{props.listName}</NavLink>
+    <Nav.Link href={'/List/' + props.listName}>{props.listName}</Nav.Link>
 );
 
 export default ListMenuItem;
