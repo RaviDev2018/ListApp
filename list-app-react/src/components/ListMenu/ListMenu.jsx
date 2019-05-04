@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 import ListMenuItem from './ListMenuItem/ListMenuItem';
 
@@ -7,9 +8,9 @@ import Navbar from 'react-bootstrap/Navbar';
 
 const ListMenu = (props) => (
     <Navbar bg="dark" variant="dark">
-        <Nav defaultActiveKey="/newList" className="flex-column" variant="pills" style={{width: "100%"}}>
+        <Nav defaultActiveKey="new" className="flex-column" variant="pills" style={{width: "100%"}}>
             <Nav.Item>
-                <Nav.Link href={'/newList'}>Add new list</Nav.Link>
+                <Nav.Link as={NavLink} to={'/newList'} eventKey="new">Add new list</Nav.Link>
             </Nav.Item>
             {props.lists.map(list => (
                 <ListMenuItem key={list.id} listName={list.name} />
