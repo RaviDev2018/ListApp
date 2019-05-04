@@ -8,7 +8,10 @@ import Navbar from 'react-bootstrap/Navbar';
 
 const ListMenu = (props) => (
     <Navbar bg="dark" variant="dark">
-        <Nav defaultActiveKey="new" className="flex-column" variant="pills" style={{width: "100%"}}>
+        <Nav defaultActiveKey="home" className="flex-column" variant="pills" style={{width: "100%"}}>
+            <Nav.Item>
+                <Nav.Link as={NavLink} to={'/'} exact={'/'} eventKey="home">Home</Nav.Link>
+            </Nav.Item>
             <Nav.Item>
                 <Nav.Link as={NavLink} to={'/newList'} eventKey="new">Add new list</Nav.Link>
             </Nav.Item>
