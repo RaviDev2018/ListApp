@@ -5,7 +5,10 @@ import { NavLink } from 'react-router-dom';
 import ListItems from '../../components/ListItems/ListItems';
 import * as actions from '../../store/action/index';
 
-import './List.css';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 export class List extends Component {
     componentDidMount() {
@@ -28,14 +31,18 @@ export class List extends Component {
         }
 
         return (
-            <div className="listPage">
-                <div>
-                    <p>{this.props.match.params.id}</p>
-                    {listItemsDisplay}
-                </div>
-                <NavLink to={'/newListItem'}>Add new list item</NavLink>
-                <span onClick={() => this.props.onRemoveList(this.props.match.params.id)}>Delete list</span>
-            </div>
+            <Card bg="dark" text="white">
+                <Card.Header as={Row}>
+                    <Col xs={9}>
+                        {this.props.match.params.id}
+                    </Col>
+                    <Col xs={3} className="text-right">
+                        <Button variant="primary" as={NavLink} to={'/newListItem'} className="mr-3">Add list item</Button>
+                        <Button variant="danger" onClick={() => this.props.onRemoveList(this.props.match.params.id)}>Delete list</Button>
+                    </Col>
+                </Card.Header>
+                {listItemsDisplay}
+            </Card>
         );
     }
 }
