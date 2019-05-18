@@ -27,7 +27,7 @@ export class List extends Component {
     render() {
         let listItemsDisplay = null;
         if(this.props.items !== undefined && Object.keys(this.props.items).length) {
-            listItemsDisplay = <ListItems listItems={this.props.items} />;
+            listItemsDisplay = <ListItems listItems={this.props.items} isItemClickable />;
         }
 
         return (
