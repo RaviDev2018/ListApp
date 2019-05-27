@@ -78,10 +78,11 @@ export const editedListItem = () => {
     };
 };
 
-export const toggleEditListItem = (showEditListItem) => {
+export const toggleEditListItem = (showEditListItem, itemName) => {
     return {
         type: actionTypes.TOGGLE_EDIT_LIST_ITEM,
-        showEditListItem: showEditListItem
+        showEditListItem: showEditListItem,
+        itemName: itemName
     };
 };
 

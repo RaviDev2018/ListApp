@@ -6,7 +6,8 @@ const initialState = {
     items: {},
     error: false,
     fetchedItems: false,
-    showEditListItem: false
+    showEditListItem: false,
+    itemName: ""
 };
 
 const addListItem = (state, action) => {
@@ -47,7 +48,8 @@ const editListItem = (state, action) => {
 
 const toggleEditListItem = (state, action) => {
     return updatedObject(state, {
-        showEditListItem: action.showEditListItem
+        showEditListItem: action.showEditListItem,
+        itemName: action.itemName
     });
 };
 

@@ -19,15 +19,19 @@ export class EditListItem extends Component {
     }
 
     componentDidMount() {
-        if(this.props.match !== undefined) {
-            this.setState({editItemName: this.props.match.params.id,
-                            editItemComment: this.props.items[this.props.match.params.id].comment});
+        if(this.props.itemName !== "") {
+            this.setState({editItemName: this.props.itemName,
+                            editItemComment: this.props.items[this.props.itemName].comment});
         }
     }
 
     componentWillReceiveProps(newProps) {
         if(newProps.isListItemRemoved) {
             this.props.history.push('/List/'+this.props.listName);
+        }
+        if(newProps.itemName !== undefined && newProps.itemName !== "") {
+            this.setState({editItemName: newProps.itemName,
+                            editItemComment: newProps.items[newProps.itemName].comment});
         }
     }
 
@@ -93,7 +97,8 @@ const mapStateToProps = state => {
         items: state.list.items,
         listName: state.list.name,
         isListItemRemoved: state.list.isListItemRemoved,
-        showEditListItem: state.list.showEditListItem
+        showEditListItem: state.list.showEditListItem,
+        itemName: state.list.itemName
     };
 }
 

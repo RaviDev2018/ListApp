@@ -11,7 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 export class ListItems extends Component {
     handleItemClick = (itemName) => {
         if(this.props.isItemClickable) {
-            this.props.onToggleEditListItem(true);
+            this.props.onToggleEditListItem(true, itemName);
         }
     }
 
@@ -44,7 +44,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onToggleEditListItem: (toggleEditListItem) => dispatch(actions.toggleEditListItem(toggleEditListItem))
+        onToggleEditListItem: (toggleEditListItem, itemName) => dispatch(actions.toggleEditListItem(toggleEditListItem, itemName))
     }
 }
 
