@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import * as actions from '../../store/action/index';
+
 import ListItem from './ListItem/ListItem';
 
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -9,7 +11,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 export class ListItems extends Component {
     handleItemClick = (itemName) => {
         if(this.props.isItemClickable) {
-            this.props.history.push('/editListItem/'+itemName);
+            this.props.onToggleEditListItem(true);
         }
     }
 
@@ -34,4 +36,16 @@ export class ListItems extends Component {
     }
 }
 
-export default withRouter(connect(null, null)(ListItems));
+const mapStateToProps = state => {
+    return {
+        showEditListItem: state.list.showEditListItem
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onToggleEditListItem: (toggleEditListItem) => dispatch(actions.toggleEditListItem(toggleEditListItem))
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListItems));

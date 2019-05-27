@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import ListItems from '../../components/ListItems/ListItems';
+import EditItemModal from '../../components/UI/Modals/EditListItem/EditListItem';
 import * as actions from '../../store/action/index';
 
 import Button from 'react-bootstrap/Button';
@@ -27,22 +28,25 @@ export class List extends Component {
     render() {
         let listItemsDisplay = null;
         if(this.props.items !== undefined && Object.keys(this.props.items).length) {
-            listItemsDisplay = <ListItems listItems={this.props.items} isItemClickable />;
+            listItemsDisplay = <ListItems listItems={this.props.items} isItemClickable editItemModal={this._editItemModal} />;
         }
 
         return (
-            <Card bg="dark" text="white">
-                <Card.Header as={Row}>
-                    <Col xs={9}>
-                        {this.props.match.params.id}
-                    </Col>
-                    <Col xs={3} className="text-right">
-                        <Button variant="primary" as={NavLink} to={'/newListItem'} className="mr-3">Add list item</Button>
-                        <Button variant="danger" onClick={() => this.props.onRemoveList(this.props.match.params.id)}>Delete list</Button>
-                    </Col>
-                </Card.Header>
-                {listItemsDisplay}
-            </Card>
+            <div>
+                <Card bg="dark" text="white">
+                    <Card.Header as={Row}>
+                        <Col xs={9}>
+                            {this.props.match.params.id}
+                        </Col>
+                        <Col xs={3} className="text-right">
+                            <Button variant="primary" as={NavLink} to={'/newListItem'} className="mr-3">Add list item</Button>
+                            <Button variant="danger" onClick={() => this.props.onRemoveList(this.props.match.params.id)}>Delete list</Button>
+                        </Col>
+                    </Card.Header>
+                    {listItemsDisplay}
+                </Card>
+                <EditItemModal></EditItemModal>
+            </div>
         );
     }
 }

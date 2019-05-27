@@ -5,7 +5,8 @@ const initialState = {
     name: "",
     items: {},
     error: false,
-    fetchedItems: false
+    fetchedItems: false,
+    showEditListItem: false
 };
 
 const addListItem = (state, action) => {
@@ -44,6 +45,12 @@ const editListItem = (state, action) => {
     return state;
 };
 
+const toggleEditListItem = (state, action) => {
+    return updatedObject(state, {
+        showEditListItem: action.showEditListItem
+    });
+};
+
 const fetchListItemsFailed = (state, action) => {
     return updatedObject(state, {
         error: true
@@ -56,6 +63,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.REMOVE_LIST_ITEM: return removeListItem(state, action);
         case actionTypes.SET_LIST_ITEMS: return setListItems(state, action);
         case actionTypes.EDIT_LIST_ITEM: return editListItem(state, action);
+        case actionTypes.TOGGLE_EDIT_LIST_ITEM: return toggleEditListItem(state, action);
         case actionTypes.FETCH_LIST_ITEMS_FAILED: return fetchListItemsFailed(state, action);
         default:
             return state;

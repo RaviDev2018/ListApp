@@ -78,6 +78,13 @@ export const editedListItem = () => {
     };
 };
 
+export const toggleEditListItem = (showEditListItem) => {
+    return {
+        type: actionTypes.TOGGLE_EDIT_LIST_ITEM,
+        showEditListItem: showEditListItem
+    };
+};
+
 export const fetchListItemsFailed = () => {
     return {
         type: actionTypes.FETCH_LIST_ITEMS_FAILED
