@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 
 import ListItems from '../../components/ListItems/ListItems';
 import EditItemModal from '../../components/UI/Modals/EditListItem/EditListItem';
+import NewItemModal from '../../components/UI/Modals/NewListItem/NewListItem';
 import * as actions from '../../store/action/index';
 
 import Button from 'react-bootstrap/Button';
@@ -44,13 +44,14 @@ export class List extends Component {
                             {listNameDisplay}
                         </Col>
                         <Col xs={3} className="text-right">
-                            <Button variant="primary" as={NavLink} to={'/newListItem'} className="mr-3">Add list item</Button>
+                            <Button variant="primary" onClick={() => this.props.onToggleNewListItem(true)} className="mr-3">Add list item</Button>
                             <Button variant="danger" onClick={() => this.props.onRemoveList(this.props.match.params.id)}>Delete list</Button>
                         </Col>
                     </Card.Header>
                     {listItemsDisplay}
                 </Card>
                 <EditItemModal></EditItemModal>
+                <NewItemModal></NewItemModal>
             </div>
         );
     }
@@ -68,7 +69,8 @@ const mapDispatchToProps = dispatch => {
     return {
         onFetchListItems: (listName) => dispatch(actions.fetchListItems(listName)),
         onRemoveList: (listName) => dispatch(actions.removeList(listName)),
-        onResetListRemoved: () => dispatch(actions.resetListRemoved())
+        onResetListRemoved: () => dispatch(actions.resetListRemoved()),
+        onToggleNewListItem: (toggleNewListItem) => dispatch(actions.toggleNewListItem(toggleNewListItem))
     }
 }
 

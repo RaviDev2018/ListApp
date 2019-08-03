@@ -3,10 +3,19 @@ import { connect } from 'react-redux';
 
 import * as actions from '../../../../store/action/index';
 
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 export class NewListItem extends Component {
-    state = {
-        newName: "",
-        newComment: ""
+    constructor(props, context) {
+        super(props, context);
+    
+        this.handleClose = this.handleClose.bind(this);
+
+        this.state = {
+            newName: "",
+            newComment: ""
+        }
     }
 
     handleChangeName = (e) => {
@@ -23,40 +32,53 @@ export class NewListItem extends Component {
 
         if(this.props.items !== undefined && Object.keys(this.props.items).length) {
             newListItem = {
-                [this.state.newName]: {
-                    "id": Math.random().toString(36).substring(2),
+                [Math.random().toString(36).substring(2)]: {
+                    "name": this.state.newName,
                     "comment": this.state.newComment
                 }
             }
             isAppendingItem = true;
         } else {
             newListItem = {
-                "items": {
-                    [this.state.newName]: {
-                        "id": Math.random().toString(36).substring(2),
+                [this.props.listId]: {
+                    [Math.random().toString(36).substring(2)]: {
+                        "name": this.state.newName,
                         "comment": this.state.newComment
                     }
                 }
             }
         }
 
-        this.props.onAddListItem(this.props.name, newListItem, isAppendingItem);
+        this.props.onAddListItem(this.props.listId, newListItem, isAppendingItem);
+    }
+
+    handleClose() {
+        this.props.onToggleNewListItem(false);
+    }
+
+    handleShow() {
+        this.props.onToggleNewListItem(true);
     }
 
     render() {
         return (
-            <div>
-                <div>
-                    <input type='input' value={this.state.newName} onChange={this.handleChangeName} />
-                </div>
-                <div>
-                    <textarea value={this.state.newComment} onChange={this.handleChangeComment} />
-                </div>
-                <div>
-                    <button onClick={this.handleAddNewListItem}>Save</button>
-                    <button>Cancel</button>
-                </div>
-            </div>
+            <Modal show={this.props.showNewListItem} onHide={this.handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add List Item</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div>
+                        <input type='input' value={this.state.newName} onChange={this.handleChangeName} />
+                    </div>
+                    <div>
+                        <textarea value={this.state.newComment} onChange={this.handleChangeComment} />
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+                    <Button variant="primary" onClick={this.handleAddNewListItem}>Save</Button>
+                </Modal.Footer>
+            </Modal>
         )
     };
 }
@@ -64,13 +86,15 @@ export class NewListItem extends Component {
 const mapStateToProps = state => {
     return {
         items: state.list.items,
-        name: state.list.name
+        listId: state.list.listId,
+        showNewListItem: state.list.showNewListItem
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAddListItem: (listName, newListItem, onAddListItem) => dispatch(actions.addListItem(listName, newListItem, onAddListItem))
+        onAddListItem: (listId, newListItem, onAddListItem) => dispatch(actions.addListItem(listId, newListItem, onAddListItem)),
+        onToggleNewListItem: (toggleNewListItem) => dispatch(actions.toggleNewListItem(toggleNewListItem))
     }
 }
 

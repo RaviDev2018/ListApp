@@ -8,7 +8,8 @@ const initialState = {
     fetchedItems: false,
     showEditListItem: false,
     itemName: "",
-    itemId: ""
+    itemId: "",
+    showNewListItem: false,
 };
 
 const addListItem = (state, action) => {
@@ -18,13 +19,13 @@ const addListItem = (state, action) => {
             items: {
                 ...state.items,
                 ...action.newListItem
-            }
+            },
+            showNewListItem: false
         };
     } else {
-        const newListItemName = Object.keys(action.newListItem)[0];
-
         return updatedObject(state, {
-            items: action.newListItem[newListItemName]
+            items: action.newListItem,
+            showNewListItem: false
         });
     }
 };
@@ -58,6 +59,12 @@ const toggleEditListItem = (state, action) => {
     });
 };
 
+const toggleNewListItem = (state, action) => {
+    return updatedObject(state, {
+        showNewListItem: action.showNewListItem
+    });
+};
+
 const fetchListItemsFailed = (state, action) => {
     return updatedObject(state, {
         error: true
@@ -71,6 +78,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_LIST_ITEMS: return setListItems(state, action);
         case actionTypes.EDIT_LIST_ITEM: return editListItem(state, action);
         case actionTypes.TOGGLE_EDIT_LIST_ITEM: return toggleEditListItem(state, action);
+        case actionTypes.TOGGLE_NEW_LIST_ITEM: return toggleNewListItem(state, action);
         case actionTypes.FETCH_LIST_ITEMS_FAILED: return fetchListItemsFailed(state, action);
         default:
             return state;

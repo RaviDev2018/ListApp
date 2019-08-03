@@ -1,16 +1,16 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-setup';
 
-export const addListItem = (listName, newListItem, isAppendingItem, oldListItemName) => {
-    let newListUrl = 'lists/'+listName+'.json';
+export const addListItem = (listId, newListItem, isAppendingItem) => {
+    let newListUrl = 'list-items.json';
     if(isAppendingItem) {
-        newListUrl = 'lists/'+listName+'/items.json';
+        newListUrl = 'list-items/'+listId+'.json';
     }
 
     return dispatch => {
         axios.patch(newListUrl, newListItem)
             .then(response => {
-                dispatch(addedListItem(newListItem, isAppendingItem, oldListItemName));
+                dispatch(addedListItem(newListItem, isAppendingItem));
             })
             .catch(error => {
                 dispatch(fetchListItemsFailed());
@@ -18,12 +18,11 @@ export const addListItem = (listName, newListItem, isAppendingItem, oldListItemN
     };
 };
 
-export const addedListItem = (newListItem, isAppendingItem, oldListItemName) => {
+export const addedListItem = (newListItem, isAppendingItem) => {
     return {
         type: actionTypes.ADD_LIST_ITEM,
         newListItem: newListItem,
-        isAppendingItem: isAppendingItem,
-        oldListItemName: oldListItemName
+        isAppendingItem: isAppendingItem
     };
 };
 
@@ -94,6 +93,13 @@ export const toggleEditListItem = (showEditListItem, itemId) => {
         type: actionTypes.TOGGLE_EDIT_LIST_ITEM,
         showEditListItem: showEditListItem,
         itemId: itemId
+    };
+};
+
+export const toggleNewListItem = (showNewListItem) => {
+    return {
+        type: actionTypes.TOGGLE_NEW_LIST_ITEM,
+        showNewListItem: showNewListItem
     };
 };
 
