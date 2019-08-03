@@ -9,9 +9,9 @@ import ListItem from './ListItem/ListItem';
 import ListGroup from 'react-bootstrap/ListGroup';
 
 export class ListItems extends Component {
-    handleItemClick = (itemName) => {
+    handleItemClick = (itemId) => {
         if(this.props.isItemClickable) {
-            this.props.onToggleEditListItem(true, itemName);
+            this.props.onToggleEditListItem(true, itemId);
         }
     }
 
@@ -20,13 +20,14 @@ export class ListItems extends Component {
         if(this.props.listItems !== undefined && Object.keys(this.props.listItems).length) {
             listItemsDisplay = <ListGroup className="list-group-flush">
                                         {Object.keys(this.props.listItems)
-                                        .map(itemName => {
+                                        .map((itemId) => {
                                             return (
                                                 <ListItem
-                                                    key={this.props.listItems[itemName].id}
-                                                    name={itemName}
-                                                    comment={this.props.listItems[itemName].comment} 
-                                                    itemClick={this.handleItemClick} />
+                                                    key={itemId}
+                                                    name={this.props.listItems[itemId].name}
+                                                    comment={this.props.listItems[itemId].comment} 
+                                                    itemClick={this.handleItemClick} 
+                                                    itemId={itemId} />
                                             )
                                         })}
                                 </ListGroup>
@@ -44,7 +45,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onToggleEditListItem: (toggleEditListItem, itemName) => dispatch(actions.toggleEditListItem(toggleEditListItem, itemName))
+        onToggleEditListItem: (toggleEditListItem, itemId) => dispatch(actions.toggleEditListItem(toggleEditListItem, itemId))
     }
 }
 

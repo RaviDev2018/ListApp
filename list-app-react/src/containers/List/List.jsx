@@ -31,12 +31,17 @@ export class List extends Component {
             listItemsDisplay = <ListItems listItems={this.props.items} isItemClickable editItemModal={this._editItemModal} />;
         }
 
+        let listNameDisplay = this.props.match.params.id;
+        if(this.props.listNames !== undefined) {
+            listNameDisplay = this.props.listNames[this.props.match.params.id];
+        }
+
         return (
             <div>
                 <Card bg="dark" text="white">
                     <Card.Header as={Row}>
                         <Col xs={9}>
-                            {this.props.match.params.id}
+                            {listNameDisplay}
                         </Col>
                         <Col xs={3} className="text-right">
                             <Button variant="primary" as={NavLink} to={'/newListItem'} className="mr-3">Add list item</Button>
@@ -53,7 +58,7 @@ export class List extends Component {
 
 const mapStateToProps = state => {
     return {
-        lists: state.summary.summaryLists,
+        listNames: state.summary.listNames,
         items: state.list.items,
         isListRemoved: state.summary.isListRemoved
     };

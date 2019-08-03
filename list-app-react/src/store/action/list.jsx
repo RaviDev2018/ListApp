@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-setup';
 
-export const addListItem = (listName, newListItem, isAppendingItem) => {
+export const addListItem = (listName, newListItem, isAppendingItem, oldListItemName) => {
     let newListUrl = 'lists/'+listName+'.json';
     if(isAppendingItem) {
         newListUrl = 'lists/'+listName+'/items.json';
@@ -10,7 +10,7 @@ export const addListItem = (listName, newListItem, isAppendingItem) => {
     return dispatch => {
         axios.patch(newListUrl, newListItem)
             .then(response => {
-                dispatch(addedListItem(newListItem, isAppendingItem));
+                dispatch(addedListItem(newListItem, isAppendingItem, oldListItemName));
             })
             .catch(error => {
                 dispatch(fetchListItemsFailed());
@@ -18,11 +18,12 @@ export const addListItem = (listName, newListItem, isAppendingItem) => {
     };
 };
 
-export const addedListItem = (newListItem, isAppendingItem) => {
+export const addedListItem = (newListItem, isAppendingItem, oldListItemName) => {
     return {
         type: actionTypes.ADD_LIST_ITEM,
         newListItem: newListItem,
-        isAppendingItem: isAppendingItem
+        isAppendingItem: isAppendingItem,
+        oldListItemName: oldListItemName
     };
 };
 
@@ -31,7 +32,7 @@ export const removeListItem = (listName, listItemName, newListItem) => {
         axios.delete('lists/'+listName+'/items/'+listItemName+'.json')
             .then(response => {
                 if(newListItem != null) {
-                    dispatch(addListItem(listName, newListItem, true));
+                    dispatch(addListItem(listName, newListItem, true, listItemName));
                 } else {
                     dispatch(removedListItem());
                 }
@@ -48,19 +49,19 @@ export const removedListItem = () => {
     };
 };
 
-export const setListItems = (items, listName) => {
+export const setListItems = (items, listId) => {
     return {
         type: actionTypes.SET_LIST_ITEMS,
         items: items,
-        name: listName
+        listId: listId
     };
 };
 
-export const fetchListItems = (listName) => {
+export const fetchListItems = (listId) => {
     return dispatch => {
-        axios.get('lists.json?orderBy="$key"&equalTo="'+listName+'"')
+        axios.get('list-items/'+listId+'.json')
             .then(response => {
-                dispatch(setListItems(response.data[listName].items, listName));
+                dispatch(setListItems(response.data, listId));
             })
             .catch(error => {
                 dispatch(fetchListItemsFailed());
@@ -68,21 +69,31 @@ export const fetchListItems = (listName) => {
     };
 };
 
-export const editListItem = (listName, oldItemName, newListItem) => {
-    return removeListItem(listName, oldItemName, newListItem);
-};
-
-export const editedListItem = () => {
-    return {
-        type: actionTypes.EDIT_LIST_ITEM
+export const editListItem = (listId, itemId, newListItem) => {
+    return dispatch => {
+        axios.patch('list-items/'+listId+'/'+itemId+'.json', newListItem)
+            .then(response => {
+                dispatch(editedListItem(itemId, newListItem));
+            })
+            .catch(error => {
+                dispatch(fetchListItemsFailed());
+            });
     };
 };
 
-export const toggleEditListItem = (showEditListItem, itemName) => {
+export const editedListItem = (itemId, newListItem) => {
+    return {
+        type: actionTypes.EDIT_LIST_ITEM,
+        itemId: itemId,
+        newListItem: newListItem
+    };
+};
+
+export const toggleEditListItem = (showEditListItem, itemId) => {
     return {
         type: actionTypes.TOGGLE_EDIT_LIST_ITEM,
         showEditListItem: showEditListItem,
-        itemName: itemName
+        itemId: itemId
     };
 };
 

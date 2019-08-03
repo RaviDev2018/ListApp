@@ -10,7 +10,7 @@ const ListSummary = (props) => (
     <CardDeck>
         {props.topLists.map(list => (
             <Card key={list.id} bg="dark" text="white" style={{textDecoration: "none"}}
-            as={NavLink} to={'/List/' + list.name}>
+            as={NavLink} to={'/List/' + list.id}>
                 <Card.Header>{list.name}</Card.Header>
                 <ListItems listItems={list.items} />
             </Card>

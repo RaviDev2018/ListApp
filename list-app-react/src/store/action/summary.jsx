@@ -11,40 +11,51 @@ export const setLists = (names, summary) => {
 
 export const fetchLists = () => {
     return dispatch => {
-        axios.get('lists.json')
+        axios.get('list-info.json')
             .then(response => {
                 let counter = 0;
                 let newListNames = [];
+                let topLists = [];
                 let newSummaryLists = [];
 
-                for(let listName in response.data) {
-                    newListNames.push({id: response.data[listName].id, name: listName});
+                for(let listId in response.data) {
+                    newListNames[listId] = response.data[listId].name;
 
                     if(counter < 5) {
-                        let summaryList = response.data[listName];
-                        
-                        if(Object.keys(summaryList.items).length > 5) {
-                            let newItems = {};
-                            let itemCounter = 0;
-
-                            for(let itemName in summaryList.items) {
-                                if(itemCounter < 5) {
-                                    newItems[itemName] = summaryList.items[itemName];
-                                    itemCounter++;
-                                }
-                            }
-                            
-                            summaryList.items = newItems;
-                        }
-
-                        summaryList.name = listName;
-
-                        newSummaryLists.push(summaryList);
+                        topLists.push(listId);
                         counter++;
                     }
                 }
-                
-                dispatch(setLists(newListNames, newSummaryLists));
+
+                axios.get('list-items.json?orderBy="$key"&startAt="'+topLists[0]+'"&endAt="'+topLists[4]+'"')
+                    .then(itemResponse => {
+                        for(let listIndex in topLists) {
+                            let listId = topLists[listIndex];
+                            let summaryList = itemResponse.data[listId];
+                        
+                            let newItems = {};
+                            let itemCounter = 0;
+
+                            for(let itemId in summaryList) {
+                                if(itemCounter < 5) {
+                                    newItems[itemId] = summaryList[itemId];
+                                    itemCounter++;
+                                }
+                            }
+                                
+                            summaryList.items = newItems;
+                            summaryList.id = listId;
+                            summaryList.name = newListNames[listId];
+
+                            newSummaryLists.push(summaryList);
+                        }
+
+                        dispatch(setLists(newListNames, newSummaryLists));
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        dispatch(fetchListsFailed());
+                    });
             })
             .catch(error => {
                 dispatch(fetchListsFailed());

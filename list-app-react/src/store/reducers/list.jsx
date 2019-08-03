@@ -2,12 +2,13 @@ import * as actionTypes from '../action/actionTypes';
 import { updatedObject } from '../../shared/utility';
 
 const initialState = {
-    name: "",
+    listId: "",
     items: {},
     error: false,
     fetchedItems: false,
     showEditListItem: false,
-    itemName: ""
+    itemName: "",
+    itemId: ""
 };
 
 const addListItem = (state, action) => {
@@ -38,18 +39,22 @@ const setListItems = (state, action) => {
     return updatedObject(state, {
         items: action.items,
         fetchedItems: true,
-        name: action.name
+        listId: action.listId
     });
 };
 
 const editListItem = (state, action) => {
-    return state;
+    const newItems = {...state.items, [action.itemId]: action.newListItem};
+    return updatedObject(state, {
+        items: newItems,
+        showEditListItem: false
+    });
 };
 
 const toggleEditListItem = (state, action) => {
     return updatedObject(state, {
         showEditListItem: action.showEditListItem,
-        itemName: action.itemName
+        itemId: action.itemId
     });
 };
 

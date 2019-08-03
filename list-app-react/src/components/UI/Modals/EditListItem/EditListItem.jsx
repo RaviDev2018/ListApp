@@ -19,19 +19,21 @@ export class EditListItem extends Component {
     }
 
     componentDidMount() {
-        if(this.props.itemName !== "") {
-            this.setState({editItemName: this.props.itemName,
-                            editItemComment: this.props.items[this.props.itemName].comment});
+        if(this.props.itemId !== "" && this.props.itemId !== undefined) {
+            let currentItem = this.props.items[this.props.itemId];
+            this.setState({editItemName: currentItem.name,
+                            editItemComment: currentItem.comment});
         }
     }
 
     componentWillReceiveProps(newProps) {
         if(newProps.isListItemRemoved) {
-            this.props.history.push('/List/'+this.props.listName);
+            this.props.history.push('/List/'+this.props.listId);
         }
-        if(newProps.itemName !== undefined && newProps.itemName !== "") {
-            this.setState({editItemName: newProps.itemName,
-                            editItemComment: newProps.items[newProps.itemName].comment});
+        if(newProps.itemId !== undefined && newProps.itemId !== "") {
+            let currentItem = newProps.items[newProps.itemId];
+            this.setState({editItemName: currentItem.name,
+                            editItemComment: currentItem.comment});
         }
     }
 
@@ -44,20 +46,16 @@ export class EditListItem extends Component {
     }
 
     handleEditListItem = () => {
-        let oldItem = this.props.items[this.props.match.params.id];
-
         let newListItem = {
-            [this.state.editItemName]: {
-                "id": oldItem.id,
-                "comment": this.state.editItemComment
-            }
+            "name": this.state.editItemName,
+            "comment": this.state.editItemComment
         }
 
-        this.props.onEditListItem(this.props.listName, this.props.match.params.id, newListItem);
+        this.props.onEditListItem(this.props.listId, this.props.itemId, newListItem);
     }
 
     handleRemoveListItem = () => {
-        this.props.onRemoveListItem(this.props.listName, this.props.match.params.id);
+        this.props.onRemoveListItem(this.props.listId, this.props.itemName);
     }
 
     handleClose() {
@@ -95,17 +93,17 @@ export class EditListItem extends Component {
 const mapStateToProps = state => {
     return {
         items: state.list.items,
-        listName: state.list.name,
+        listId: state.list.listId,
         isListItemRemoved: state.list.isListItemRemoved,
         showEditListItem: state.list.showEditListItem,
-        itemName: state.list.itemName
+        itemId: state.list.itemId
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onEditListItem: (listName, oldItemName, newListItem) => dispatch(actions.editListItem(listName, oldItemName, newListItem)),
-        onRemoveListItem: (listName, listItemName) => dispatch(actions.removeListItem(listName, listItemName)),
+        onEditListItem: (listId, itemId, newListItem) => dispatch(actions.editListItem(listId, itemId, newListItem)),
+        onRemoveListItem: (listId, listItemName) => dispatch(actions.removeListItem(listId, listItemName)),
         onToggleEditListItem: (toggleEditListItem) => dispatch(actions.toggleEditListItem(toggleEditListItem))
     }
 }
