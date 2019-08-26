@@ -19,7 +19,8 @@ export class EditListItem extends Component {
     }
 
     componentDidMount() {
-        if(this.props.itemId !== "" && this.props.itemId !== undefined) {
+        if(this.props.itemId !== "" && this.props.itemId !== undefined
+            && this.props.items[this.props.itemId] !== undefined) {
             let currentItem = this.props.items[this.props.itemId];
             this.setState({editItemName: currentItem.name,
                             editItemComment: currentItem.comment});
@@ -27,10 +28,8 @@ export class EditListItem extends Component {
     }
 
     componentWillReceiveProps(newProps) {
-        if(newProps.isListItemRemoved) {
-            this.props.history.push('/List/'+this.props.listId);
-        }
-        if(newProps.itemId !== undefined && newProps.itemId !== "") {
+        if(newProps.itemId !== undefined && newProps.itemId !== ""
+            && newProps.items[newProps.itemId] !== undefined) {
             let currentItem = newProps.items[newProps.itemId];
             this.setState({editItemName: currentItem.name,
                             editItemComment: currentItem.comment});
@@ -55,7 +54,7 @@ export class EditListItem extends Component {
     }
 
     handleRemoveListItem = () => {
-        this.props.onRemoveListItem(this.props.listId, this.props.itemName);
+        this.props.onRemoveListItem(this.props.listId, this.props.itemId);
     }
 
     handleClose() {
@@ -103,7 +102,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onEditListItem: (listId, itemId, newListItem) => dispatch(actions.editListItem(listId, itemId, newListItem)),
-        onRemoveListItem: (listId, listItemName) => dispatch(actions.removeListItem(listId, listItemName)),
+        onRemoveListItem: (listId, itemId) => dispatch(actions.removeListItem(listId, itemId)),
         onToggleEditListItem: (toggleEditListItem) => dispatch(actions.toggleEditListItem(toggleEditListItem))
     }
 }

@@ -31,8 +31,12 @@ const addListItem = (state, action) => {
 };
 
 const removeListItem = (state, action) => {
+    let updatedListItems = {...state.items};
+    delete updatedListItems[action.itemId];
+
     return updatedObject(state, {
-        isListItemRemoved: true
+        items: updatedListItems,
+        showEditListItem: false
     });
 };
 
