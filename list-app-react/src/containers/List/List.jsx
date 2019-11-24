@@ -27,7 +27,8 @@ export class List extends Component {
 
     render() {
         let listItemsDisplay = null;
-        if(this.props.items !== undefined && Object.keys(this.props.items).length) {
+        if(this.props.items !== undefined && this.props.items !== null 
+            && Object.keys(this.props.items).length) {
             listItemsDisplay = <ListItems listItems={this.props.items} isItemClickable editItemModal={this._editItemModal} />;
         }
 

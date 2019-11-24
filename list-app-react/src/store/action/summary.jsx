@@ -36,13 +36,17 @@ export const fetchLists = () => {
                             let newItems = {};
                             let itemCounter = 0;
 
-                            for(let itemId in summaryList) {
-                                if(itemCounter < 5) {
-                                    newItems[itemId] = summaryList[itemId];
-                                    itemCounter++;
+                            if(summaryList !== undefined && summaryList !== null) {
+                                for(let itemId in summaryList) {
+                                    if(itemCounter < 5) {
+                                        newItems[itemId] = summaryList[itemId];
+                                        itemCounter++;
+                                    }
                                 }
+                            } else {
+                                summaryList = {};
                             }
-                                
+                            
                             summaryList.items = newItems;
                             summaryList.id = listId;
                             summaryList.name = newListNames[listId];
@@ -65,7 +69,7 @@ export const fetchLists = () => {
 
 export const addList = (newList) => {
     return dispatch => {
-        axios.patch('lists.json', newList)
+        axios.patch('list-info.json', newList)
             .then(response => {
                 dispatch(addedList(newList));
             })
@@ -104,6 +108,13 @@ export const removedList = (listName) => {
 export const resetListRemoved = () => {
     return {
         type: actionTypes.RESET_LIST_REMOVED
+    };
+};
+
+export const toggleNewList = (showNewList) => {
+    return {
+        type: actionTypes.TOGGLE_NEW_LIST,
+        showNewList: showNewList
     };
 };
 

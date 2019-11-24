@@ -5,7 +5,8 @@ const initialState = {
     summaryLists: [],
     listNames: [],
     error: false,
-    isListRemoved: false
+    isListRemoved: false,
+    showNewList: false
 };
 
 const setLists = (state, action) => {
@@ -16,29 +17,13 @@ const setLists = (state, action) => {
 };
 
 const addList = (state, action) => {
-    const newListName = Object.keys(action.newList)[0];
+    let updatedListNames = {...state.listNames};
+    updatedListNames[Object.keys(action.newList)[0]] = action.newList[Object.keys(action.newList)[0]].name;
 
-    const newListNameObj = {
-        "id": action.newList[newListName].id,
-        "name": newListName
-    };
-
-    const newList = {
-        ...action.newList[newListName],
-        "name": newListName
-    };
-
-    return {
-        ...state,
-        listNames: [
-            ...state.listNames,
-            newListNameObj
-        ],
-        summaryLists: [
-            ...state.summaryLists,
-            newList
-        ]
-    };
+    return updatedObject(state, {
+        listNames: updatedListNames,
+        showNewList: false
+    });
 };
 
 const removeList = (state, action) => {
@@ -50,6 +35,12 @@ const removeList = (state, action) => {
 const resetListRemoved = (state, action) => {
     return updatedObject(state, {
         isListRemoved: false
+    });
+};
+
+const toggleNewList = (state, action) => {
+    return updatedObject(state, {
+        showNewList: action.showNewList
     });
 };
 
@@ -66,6 +57,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.REMOVE_LIST: return removeList(state, action);
         case actionTypes.RESET_LIST_REMOVED: return resetListRemoved(state, action);
         case actionTypes.FETCH_LISTS_FAILED: return fetchListsFailed(state, action);
+        case actionTypes.TOGGLE_NEW_LIST: return toggleNewList(state, action);
         default:
             return state;
     }

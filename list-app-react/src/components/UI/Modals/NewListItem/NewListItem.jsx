@@ -30,7 +30,8 @@ export class NewListItem extends Component {
         let newListItem = null;
         let isAppendingItem = false;
 
-        if(this.props.items !== undefined && Object.keys(this.props.items).length) {
+        if(this.props.items !== undefined && this.props.items !== null
+            && Object.keys(this.props.items).length) {
             newListItem = {
                 [Math.random().toString(36).substring(2)]: {
                     "name": this.state.newName,

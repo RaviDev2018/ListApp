@@ -12,9 +12,6 @@ const ListMenu = (props) => (
             <Nav.Item>
                 <Nav.Link as={NavLink} to={'/'} exact>Home</Nav.Link>
             </Nav.Item>
-            <Nav.Item>
-                <Nav.Link as={NavLink} to={'/newList'}>Add new list</Nav.Link>
-            </Nav.Item>
             {Object.keys(props.lists).map((listId) => (
                 <ListMenuItem key={listId} listName={props.lists[listId]} listId={listId} />
             ))}
