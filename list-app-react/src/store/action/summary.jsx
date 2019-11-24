@@ -57,7 +57,6 @@ export const fetchLists = () => {
                         dispatch(setLists(newListNames, newSummaryLists));
                     })
                     .catch(error => {
-                        console.log(error);
                         dispatch(fetchListsFailed());
                     });
             })
@@ -86,11 +85,17 @@ export const addedList = (newList) => {
     };
 };
 
-export const removeList = (listName) => {
+export const removeList = (listId) => {
     return dispatch => {
-        axios.delete('lists/'+listName+'.json')
+        axios.delete('list-info/'+listId+'.json')
             .then(response => {
-                dispatch(removedList(listName));
+                axios.delete('list-items/'+listId+'.json')
+                    .then(response => {
+                        dispatch(removedList(listId));
+                    })
+                    .catch(error => {
+                        dispatch(fetchListsFailed());
+                    });
             })
             .catch(error => {
                 dispatch(fetchListsFailed());
@@ -98,10 +103,10 @@ export const removeList = (listName) => {
     };
 };
 
-export const removedList = (listName) => {
+export const removedList = (listId) => {
     return {
         type: actionTypes.REMOVE_LIST,
-        listName: listName
+        listId: listId
     };
 };
 
