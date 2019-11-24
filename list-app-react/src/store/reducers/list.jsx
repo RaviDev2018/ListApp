@@ -24,7 +24,7 @@ const addListItem = (state, action) => {
         };
     } else {
         return updatedObject(state, {
-            items: action.newListItem,
+            items: action.newListItem[state.listId],
             showNewListItem: false
         });
     }
