@@ -29,6 +29,7 @@ export class EditListItem extends Component {
 
     componentWillReceiveProps(newProps) {
         if(newProps.itemId !== undefined && newProps.itemId !== ""
+            && newProps.items != null
             && newProps.items[newProps.itemId] !== undefined) {
             let currentItem = newProps.items[newProps.itemId];
             this.setState({editItemName: currentItem.name,
