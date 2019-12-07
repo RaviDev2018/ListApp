@@ -32,6 +32,7 @@ export class NewList extends Component {
     }
 
     handleClose() {
+        this.setState({newName: ""});
         this.props.onToggleNewList(false);
     }
 

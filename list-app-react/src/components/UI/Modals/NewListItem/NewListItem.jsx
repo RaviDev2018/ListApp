@@ -54,6 +54,7 @@ export class NewListItem extends Component {
     }
 
     handleClose() {
+        this.setState({newName: "", newComment: ""});
         this.props.onToggleNewListItem(false);
     }
 
