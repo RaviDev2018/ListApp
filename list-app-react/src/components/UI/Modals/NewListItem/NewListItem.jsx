@@ -5,6 +5,8 @@ import * as actions from '../../../../store/action/index';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 export class NewListItem extends Component {
     constructor(props, context) {
@@ -69,12 +71,18 @@ export class NewListItem extends Component {
                     <Modal.Title>Add List Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div>
-                        <input type='input' value={this.state.newName} onChange={this.handleChangeName} />
-                    </div>
-                    <div>
-                        <textarea value={this.state.newComment} onChange={this.handleChangeComment} />
-                    </div>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>Name</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl value={this.state.newName} onChange={this.handleChangeName} />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>Comment</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl as="textarea" value={this.state.newComment} onChange={this.handleChangeComment} />
+                    </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.handleClose}>Close</Button>

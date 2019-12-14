@@ -5,6 +5,8 @@ import * as actions from '../../../../store/action/index';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 export class EditListItem extends Component {
     constructor(props, context) {
@@ -73,12 +75,18 @@ export class EditListItem extends Component {
                     <Modal.Title>Modify List Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div>
-                        <input type='input' value={this.state.editItemName} onChange={this.handleChangeEditName} />
-                    </div>
-                    <div>
-                        <textarea value={this.state.editItemComment} onChange={this.handleChangeEditComment} />
-                    </div>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>Name</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl value={this.state.editItemName} onChange={this.handleChangeEditName} />
+                    </InputGroup>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>Comment</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl as="textarea" value={this.state.editItemComment} onChange={this.handleChangeEditComment} />
+                    </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.handleClose}>Close</Button>

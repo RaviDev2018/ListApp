@@ -5,6 +5,8 @@ import * as actions from '../../../../store/action/index';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 export class NewList extends Component {
     constructor(props, context) {
@@ -47,9 +49,12 @@ export class NewList extends Component {
                     <Modal.Title>Add List</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div>
-                        <input type='input' value={this.state.newName} onChange={this.handleChangeName} />
-                    </div>
+                    <InputGroup className="mb-3">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>Name</InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <FormControl value={this.state.newName} onChange={this.handleChangeName} />
+                    </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={this.handleClose}>Close</Button>
