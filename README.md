@@ -8,7 +8,6 @@ I will be using NodeJS to create the backend server and ReactJS to display the u
 
 Please feel free to use my application and if you have any suggestions please let me know.
 
-Setting up PostGres with Docker
-Follow the guide below for the detailed steps but you will need to pull the Postgress docker image and then create the docker container.
-
-https://www.docker.com/blog/how-to-use-the-postgres-docker-official-image/
+Setting up the database and running updates.
+Install Docker desktop then run docker compose up.
+You can remove the log level setting from the compose file for Liquibase if there is too much logging.

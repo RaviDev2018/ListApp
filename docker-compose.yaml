@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:18
+    container_name: list_app-postgres
+    environment:
+      POSTGRES_DB: list_app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: listapppassword
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d list_app"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  liquibase:
+    image: liquibase/liquibase:4
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./database:/liquibase/changelog
+    command:
+      - --defaultsFile=/liquibase/changelog/liquibase.properties
+      - --logLevel=debug
+      - update
+    working_dir: /liquibase/changelog
